@@ -116,13 +116,13 @@ view:+order_items {
     type: sum
     sql: ${sale_price} ;;
     filters: [current_year: "Yes"]
-    value_format_name: usd
+    value_format_name: usd_0
   }
   measure: total_sale_price_last_year {
     type: sum
     sql: ${sale_price} ;;
     filters: [last_year: "Yes"]
-    value_format_name: usd
+    value_format_name: usd_0
   }
   measure: total_sale_price_percent_change {
     type: number
