@@ -116,7 +116,12 @@ view:+order_items {
     type: sum
     sql: ${sale_price} ;;
     filters: [current_year: "Yes"]
-#     value_format_name: usd_0
+    value_format_name: usd_0
+  }
+  measure: total_sale_price_current_year_thousands_format {
+    type: sum
+    sql: ${sale_price} ;;
+    filters: [current_year: "Yes"]
     value_format: "#,##0,\"K\";-#,##0,\"K\""
   }
   measure: total_sale_price_last_year {
