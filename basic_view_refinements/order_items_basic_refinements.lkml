@@ -116,7 +116,8 @@ view:+order_items {
     type: sum
     sql: ${sale_price} ;;
     filters: [current_year: "Yes"]
-    value_format_name: usd_0
+#     value_format_name: usd_0
+    value_format: "#,##0,\"K\";-#,##0,\"K\""
   }
   measure: total_sale_price_last_year {
     type: sum
@@ -127,6 +128,6 @@ view:+order_items {
   measure: total_sale_price_percent_change {
     type: number
     sql: (${total_sale_price_current_year}-${total_sale_price_last_year})*1.0/nullif(${total_sale_price_last_year},0) ;;
-    value_format_name: percent_2
+    value_format_name: percent_0
   }
 }
