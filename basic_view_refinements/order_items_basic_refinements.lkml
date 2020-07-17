@@ -59,6 +59,11 @@ view:+order_items {
     sql: ${order_items.created_year}=${order_items.now_year}-1 ;;
   }
 
+  dimension: current_year {
+    type: yesno
+    sql: ${order_items.created_year}=${order_items.now_year} ;;
+  }
+
   measure: test_count_distinct_days {
     type: number
     sql: count(distinct ${order_items.created_date}) ;;
@@ -104,5 +109,24 @@ view:+order_items {
   measure: total_sale_price {
     type: sum
     sql: ${sale_price} ;;
+    value_format_name: usd
+  }
+
+  measure: total_sale_price_current_year {
+    type: sum
+    sql: ${sale_price} ;;
+    filters: [current_year: "Yes"]
+    value_format_name: usd
+  }
+  measure: total_sale_price_last_year {
+    type: sum
+    sql: ${sale_price} ;;
+    filters: [last_year: "Yes"]
+    value_format_name: usd
+  }
+  measure: total_sale_price_percent_change {
+    type: number
+    sql: (${total_sale_price_current_year}-${total_sale_price_last_year})*1.0/nullif(${total_sale_price_last_year},0) ;;
+    value_format_name: percent_2
   }
 }

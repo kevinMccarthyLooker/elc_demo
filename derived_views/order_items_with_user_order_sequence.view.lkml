@@ -7,8 +7,10 @@ view: order_summary_for_user {
       derived_column: order_sequence_for_user {sql:rank() over(partition by user_id order by order_id asc);;}
       derived_column: primary_key {sql:rank() over(order by order_id);;}
     }
+    sql_trigger_value: select cast(CURRENT_TIMESTAMP() as date) ;;
+    cluster_keys: ["order_id"]
   }
-  dimension: primary_key {primary_key:yes}
+  dimension: primary_key {primary_key:yes sql:${order_id};; hidden:yes}
   dimension: user_id {}
   dimension: order_id {}
   dimension: order_sequence_for_user {type: number}
