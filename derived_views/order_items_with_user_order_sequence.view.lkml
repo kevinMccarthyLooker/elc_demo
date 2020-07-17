@@ -19,4 +19,11 @@ view: order_summary_for_user {
     type:yesno
     sql:${order_sequence_for_user}=1;;
   }
+  #alternate labelling
+  dimension: is_user_first_order_label {
+    case: {
+      when: {sql:${order_sequence_for_user}=1;;label:"New Buyer"}
+      else: "Repeat Buyer"
+    }
+  }
 }
