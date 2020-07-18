@@ -73,6 +73,15 @@ view:+order_items {
     sql: concat(min( ${order_items.created_date}),' to ',max(${order_items.created_date})) ;;
   }
 
+  dimension: week_and_day_of_year {
+    sql: concat(${created_week_of_year},'-',${created_day_of_week_index}) ;;
+    order_by_field: week_and_day_of_year_sort
+  }
+  dimension: week_and_day_of_year_sort {
+    sql: concat(${created_week_of_year}*10 + ${created_day_of_week_index}) ;;
+
+  }
+
   ## to be hidden helper fields ## }
 
   ## parameterized filter ## {
@@ -117,14 +126,42 @@ view:+order_items {
     sql: ${sale_price} ;;
     filters: [current_year: "Yes"]
     value_format_name: usd_0
+    link: {
+        url: "{{drill_holder._link}}"
+        label: "drill to details"
+    }
+
   }
+
+  measure: drill_holder {
+    type: number
+    drill_fields: [order_items.order_id,order_items.id,order_items.sale_price,order_items.created_date,users.first_name,users.last_name,order_summary_for_user.is_user_first_order,order_summary_for_user.items_in_order,order_items.total_sale_price]
+    sql: max(1) ;;
+  }
+
+
   measure: total_sale_price_current_year_thousands_format {
     type: sum
     sql: ${sale_price} ;;
-#     drill_fields: [users.state,total_sale_price_current_year]
-
     filters: [current_year: "Yes"]
     value_format: "$#.0,k;-$#.0,k"
+    link: {
+      url: "https://profservices.dev.looker.com/looks/635?&f[order_items.special_date_filter]={{_filters['order_items.special_date_filter']}}&f[users.us_region]={{row['users.us_region']}}&f[users.traffic_source]={{row['users.traffic_source']}}&f[products.brand]={{_filters['products.brand']}}&toggle=det"
+      label: "{%if users.us_region_is_selected %}{%else%}{{row['users.us_region']}}{{row['users.traffic_source']}}{{row['products.brand']}} by Region{%endif%}"
+    }
+    link: {
+      url: "https://profservices.dev.looker.com/looks/633?&f[order_items.special_date_filter]={{_filters['order_items.special_date_filter']}}&f[users.us_region]={{row['users.us_region']}}&f[users.traffic_source]={{row['users.traffic_source']}}&f[products.brand]={{_filters['products.brand']}}&toggle=det"
+      label: "{%if users.traffic_source._is_selected %}{%else%}{{row['users.us_region']}}{{row['users.traffic_source']}}{{row['products.brand']}} by Traffic Source{%endif%}"
+    }
+    link: {
+      url: "https://profservices.dev.looker.com/looks/634?&f[order_items.special_date_filter]={{_filters['order_items.special_date_filter']}}&f[users.us_region]={{row['users.us_region']}}&f[users.traffic_source]={{row['users.traffic_source']}}&f[products.brand]={{_filters['products.brand']}}&toggle=det"
+      label: "{%if products.brand._is_selected %}{%else%}{{row['users.us_region']}}{{row['users.traffic_source']}}{{row['products.brand']}} by Brand{%endif%}"
+    }
+    #map
+    link: {
+      url: "https://profservices.dev.looker.com/looks/636?&f[order_items.special_date_filter]={{_filters['order_items.special_date_filter']}}&f[users.us_region]={{row['users.us_region']}}&f[users.traffic_source]={{row['users.traffic_source']}}&f[products.brand]={{_filters['products.brand']}}&toggle=det"
+      label: "{{row['users.us_region']}}{{row['users.traffic_source']}}{{row['products.brand']}} Total Sales by State (Map)"
+    }
   }
   measure: total_sale_price_last_year {
     type: sum
@@ -140,5 +177,10 @@ view:+order_items {
   }
   dimension: total {
     sql: 'Total' ;;
+  }
+  measure: total_measure {
+    type: string
+    sql: max('Total') ;;
+    html: {{rendered_value}} (∆{{total_sale_price_percent_change._rendered_value}});;
   }
 }
