@@ -111,39 +111,57 @@ case: {
 else: "Global"
       }
 
-    drill_fields: [state]
-
+    #region drill down
+#     link: {
+#       url: "https://profservices.dev.looker.com/embed/looks/635?&f[order_items.special_date_filter]={{_filters['order_items.special_date_filter']}}&f[users.us_region]={{row['users.us_region']}}&f[users.traffic_source]={{row['users.traffic_source']}}&f[products.brand]={{row['users.products.brand']}}&toggle=det"
+#       label: "{%if users.us_region_is_selected %}{%else%}{{row['users.us_region']}}{{row['users.traffic_source']}}{{row['products.brand']}} by Region{%endif%}"
+#     }
+    #traffic source drill down
+    link: {
+      url: "https://profservices.dev.looker.com/embed/looks/633?&f[order_items.special_date_filter]={{_filters['order_items.special_date_filter']}}&f[users.us_region]={{row['users.us_region']}}&f[users.traffic_source]={{row['users.traffic_source']}}&f[products.brand]={{row['users.products.brand']}}&toggle=det"
+      label: "{%if users.traffic_source._is_selected %}{%else%}{{row['users.us_region']}}{{row['users.traffic_source']}}{{row['products.brand']}} by Traffic Source{%endif%}"
+    }
+    #brand drill down
+    link: {
+      url: "https://profservices.dev.looker.com/embed/looks/634?&f[order_items.special_date_filter]={{_filters['order_items.special_date_filter']}}&f[users.us_region]={{row['users.us_region']}}&f[users.traffic_source]={{row['users.traffic_source']}}&f[products.brand]={{row['users.products.brand']}}&toggle=det"
+      label: "{%if products.brand._is_selected %}{%else%}{{row['users.us_region']}}{{row['users.traffic_source']}}{{row['products.brand']}} by Brand{%endif%}"
+    }
+    #dill to map
+    link: {
+      url: "https://profservices.dev.looker.com/embed/looks/636?&f[order_items.special_date_filter]={{_filters['order_items.special_date_filter']}}&f[users.us_region]={{row['users.us_region']}}&f[users.traffic_source]={{row['users.traffic_source']}}&f[products.brand]={{row['users.products.brand']}}&toggle=det"
+      label: "{{row['users.us_region']}}{{row['users.traffic_source']}}{{row['products.brand']}} Total Sales by State (Map)"
+    }
+    #dill to week of year
+    link: {
+      url: "https://profservices.dev.looker.com/embed/looks/637?&f[order_items.special_date_filter]={{_filters['order_items.special_date_filter']}}&f[users.us_region]={{row['users.us_region']}}&f[users.traffic_source]={{row['users.traffic_source']}}&f[products.brand]={{row['users.products.brand']}}&toggle=det"
+      label: "{{row['users.us_region']}}{{row['users.traffic_source']}}{{row['products.brand']}} by Week of Year"
+    }
 }
-
-# NE.name <- c('Connecticut','Maine','Massachusetts','New Hampshire',
-#              'Rhode Island','Vermont','New Jersey','New York',
-#              'Pennsylvania')
-# NE.abrv <- c('CT','ME','MA','NH','RI','VT','NJ','NY','PA')
-# NE.ref <- c(NE.name,NE.abrv)
-#
-# MW.name <- c('Indiana','Illinois','Michigan','Ohio','Wisconsin',
-#              'Iowa','Kansas','Minnesota','Missouri','Nebraska',
-#              'North Dakota','South Dakota')
-# MW.abrv <- c('IN','IL','MI','OH','WI','IA','KS','MN','MO','NE',
-#              'ND','SD')
-# MW.ref <- c(MW.name,MW.abrv)
-#
-# S.name <- c('Delaware','District of Columbia','Florida','Georgia',
-#             'Maryland','North Carolina','South Carolina','Virginia',
-#             'West Virginia','Alabama','Kentucky','Mississippi',
-#             'Tennessee','Arkansas','Louisiana','Oklahoma','Texas')
-# S.abrv <- c('DE','DC','FL','GA','MD','NC','SC','VA','WV','AL',
-#             'KY','MS','TN','AR','LA','OK','TX')
-# S.ref <- c(S.name,S.abrv)
-#
-# W.name <- c('Arizona','Colorado','Idaho','New Mexico','Montana',
-#             'Utah','Nevada','Wyoming','Alaska','California',
-#             'Hawaii','Oregon','Washington')
-# W.abrv <- c('AZ','CO','ID','NM','MT','UT','NV','WY','AK','CA',
-#             'HI','OR','WA')
-# W.ref <- c(W.name,W.abrv)
-
-#   }
-
-
+ dimension: traffic_source {
+    link: {
+      url: "https://profservices.dev.looker.com/embed/looks/635?&f[order_items.special_date_filter]={{_filters['order_items.special_date_filter']}}&f[users.us_region]={{row['users.us_region']}}&f[users.traffic_source]={{row['users.traffic_source']}}&f[products.brand]={{row['users.products.brand']}}&toggle=det"
+      label: "{%if users.us_region_is_selected %}{%else%}{{row['users.us_region']}}{{row['users.traffic_source']}}{{row['products.brand']}} by Region{%endif%}"
+    }
+    #traffic source drill down
+#     link: {
+#       url: "https://profservices.dev.looker.com/embed/looks/633?&f[order_items.special_date_filter]={{_filters['order_items.special_date_filter']}}&f[users.us_region]={{row['users.us_region']}}&f[users.traffic_source]={{row['users.traffic_source']}}&f[products.brand]={{row['users.products.brand']}}&toggle=det"
+#       label: "{%if users.traffic_source._is_selected %}{%else%}{{row['users.us_region']}}{{row['users.traffic_source']}}{{row['products.brand']}} by Traffic Source{%endif%}"
+#     }
+    #brand drill down
+      link: {
+        url: "https://profservices.dev.looker.com/embed/looks/634?&f[order_items.special_date_filter]={{_filters['order_items.special_date_filter']}}&f[users.us_region]={{row['users.us_region']}}&f[users.traffic_source]={{row['users.traffic_source']}}&f[products.brand]={{row['users.products.brand']}}&toggle=det"
+        label: "{%if products.brand._is_selected %}{%else%}{{row['users.us_region']}}{{row['users.traffic_source']}}{{row['products.brand']}} by Brand{%endif%}"
+      }
+    #dill to map
+    link: {
+      url: "https://profservices.dev.looker.com/embed/looks/636?&f[order_items.special_date_filter]={{_filters['order_items.special_date_filter']}}&f[users.us_region]={{row['users.us_region']}}&f[users.traffic_source]={{row['users.traffic_source']}}&f[products.brand]={{row['users.products.brand']}}&toggle=det"
+      label: "{{row['users.us_region']}}{{row['users.traffic_source']}}{{row['products.brand']}} Total Sales by State (Map)"
+    }
+  #dill to week of year
+  link: {
+    url: "https://profservices.dev.looker.com/embed/looks/637?&f[order_items.special_date_filter]={{_filters['order_items.special_date_filter']}}&f[users.us_region]={{row['users.us_region']}}&f[users.traffic_source]={{row['users.traffic_source']}}&f[products.brand]={{row['users.products.brand']}}&f[order_summary_for_user.is_user_first_order_label]={{row['order_summary_for_user.is_user_first_order_label']}}&toggle=det"
+    label: "{{row['users.us_region']}}{{row['users.traffic_source']}}{{row['products.brand']}} by Week of Year"
+  }
+  #order_summary_for_user.is_user_first_order_label
+  }
 }
