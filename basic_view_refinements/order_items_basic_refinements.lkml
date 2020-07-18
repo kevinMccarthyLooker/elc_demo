@@ -136,4 +136,7 @@ view:+order_items {
     sql: (${total_sale_price_current_year}-${total_sale_price_last_year})*1.0/nullif(${total_sale_price_last_year},0) ;;
     value_format_name: percent_0
   }
+  dimension: total {
+    sql: 'Total' ;;
+  }
 }
