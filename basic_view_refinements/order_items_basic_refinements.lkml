@@ -121,9 +121,10 @@ view:+order_items {
   measure: total_sale_price_current_year_thousands_format {
     type: sum
     sql: ${sale_price} ;;
-    drill_fields: [users.state,total_sale_price_current_year]
+#     drill_fields: [users.state,total_sale_price_current_year]
+
     filters: [current_year: "Yes"]
-    value_format: "#,##0,\"K\";-#,##0,\"K\""
+    value_format: "$#.0,k;-$#.0,k"
   }
   measure: total_sale_price_last_year {
     type: sum

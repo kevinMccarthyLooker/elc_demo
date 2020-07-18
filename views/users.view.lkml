@@ -111,6 +111,8 @@ case: {
 else: "Global"
       }
 
+    drill_fields: [state]
+
 }
 
 # NE.name <- c('Connecticut','Maine','Massachusetts','New Hampshire',
